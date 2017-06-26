@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style type="text/css">
+        .root{
+            display: flex;
+            height: 600px;
+            width: 800px;
+            flex-direction: column;
+            justify-content: center;
+            border: solid 1px #000;
+            margin: 10px;
+            background-color:#fff;
+        }
+        .node-1{
+            display: flex;
+            width: 750px;
+            height: 250px;
+            flex-direction: row;
+            justify-content: space-between;
+            border: solid 1px #000;
+            margin: 10px;
+           background-color:#fff;
+
+        }
+        .node-2{
+            display: flex;
+            width: 350px;
+            height: 200px;
+            justify-content: space-between;
+            flex-direction: row;
+            border: solid 1px #000;
+            margin: 10px;
+            background-color:#fff;
+        }
+        .node-3{
+            display: flex;
+            width: 150px;
+            height: 180px;
+            flex-direction: column;
+            justify-content: space-between;
+            border: solid 1px #000;
+            margin: 10px;
+            background-color:#fff;
+        }
+        .node-4{
+            width: 100px;
+            height: 80px;
+            border: solid 1px #000;
+            margin: 10px;
+            background-color:#fff;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="root" id="root">root
+        <div class="node-1"> 1
+            <div class="node-2">2
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+            </div>
+            <div class="node-2">2
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+                <div class="node-3">3                    
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+            </div>
+        </div>
+        <div class="node-1"> 1
+            <div class="node-2">2
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+            </div>
+            <div class="node-2">2
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+                <div class="node-3">3
+                    <div class="node-4">4</div>
+                    <div class="node-4">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="preOrder">前序遍历</button>
+    <button id="inOrder">中序遍历</button>
+    <button id="postOrder">后序遍历</button>
+</body>
+<script>
+    var preBtn = document.getElementById('preOrder');
+    var inBtn = document.getElementById('inOrder');
+    var postBtn = document.getElementById('postOrder');
+    var timer = null;
+    var treenodes = [];
+    var root = document.getElementById('root');
+
+    window.onload = function(){
+            preBtn.onclick = function(){
+                reset();
+                preOrder(root);
+                changeState();
+            };
+
+            inBtn.onclick = function(){
+                reset();
+                inOrder(root);
+                changeState();
+            };
+
+            postBtn.onclick = function(){
+                reset();
+                postOrder(root);
+                changeState();
+            };
+                
+            };
+
+
+    function preOrder(node){
+        if(!(node == null)){
+            treenodes.push(node);
+            preOrder(node.firstElementChild);
+            preOrder(node.lastElementChild);
+        }
+    }
+
+    function inOrder(node){
+        if(!(node == null)){
+            inOrder(node.firstElementChild);
+            treenodes.push(node);
+            inOrder(node.lastElementChild);
+        }
+    }
+
+    function postOrder(node){
+        if(!(node == null)){
+            postOrder(node.firstElementChild);
+            postOrder(node.lastElementChild);
+            treenodes.push(node);
+        }
+    }
+
+    function changeState(){
+        var i = 0;
+        treenodes[0].style.backgroundColor = "red";
+        timer = setInterval(function(){
+            i++;
+            if(i<treenodes.length){
+                treenodes[i-1].style.backgroundColor = "white";
+                treenodes[i].style.backgroundColor = "red";
+            }else{
+                reset();
+            }
+
+            },500)
+        }
+
+        function reset(){
+            clearInterval(timer);
+            treenodes = [];
+            var alldivs = document.getElementsByTagName('div');
+            for(var i = 0;i<=alldivs.length-1;i++){
+                alldivs[i].style.backgroundColor = "white";
+            }
+            
+        }
+    
+</script>
+</html>
